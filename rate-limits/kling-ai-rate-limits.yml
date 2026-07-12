@@ -1,0 +1,64 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Kling AI
+providerId: kling-ai
+created: '2026-07-11'
+modified: '2026-07-11'
+reconciled: false
+tags:
+- Video Generation
+- AI Video
+- Generative AI
+- Rate Limiting
+- Concurrency
+description: >-
+  Kling AI's generative work is asynchronous, so throughput is governed less by
+  a per-minute request cap and more by how many generation tasks an account may
+  run concurrently. Concurrency allowances scale with account tier and prepaid
+  spend; higher tiers and enterprise agreements raise the number of simultaneous
+  in-flight video/image tasks. The lightweight create and query (polling) calls
+  are subject to request-rate limiting; exceeding it returns HTTP 429. Kling
+  does not publish a single authoritative numeric table, so the figures here are
+  indicative and NOT reconciled.
+notes: >-
+  Concurrency and request-rate numbers vary by account tier and are not
+  authoritatively published. Reconcile against the Kling AI Open Platform
+  console and documentation. Poll query endpoints on a backoff (e.g. every few
+  seconds) rather than tightly, and honor 429 responses.
+sources:
+- https://app.klingai.com/global/dev/document-api/apiReference/commonInfo
+- https://app.klingai.com/global/dev/document-api/quickStart/productIntroduction/overview
+responseCodes:
+  throttled: 429
+limits:
+- name: Concurrent Generation Tasks
+  scope: account
+  metric: tasks
+  limit: tier-based (not authoritatively published)
+  notes: Number of simultaneous in-flight video/image tasks; grows with account tier and prepaid spend.
+- name: Task Creation Requests
+  scope: account
+  metric: requests
+  limit: not published
+  notes: Rate on POST create-task calls; 429 on exceed.
+- name: Task Query (Poll) Requests
+  scope: account
+  metric: requests
+  limit: not published
+  notes: Rate on GET query-task calls used for polling; 429 on exceed.
+- name: JWT Token Lifetime
+  scope: token
+  metric: seconds
+  limit: ~1800 (about 30 minutes)
+  notes: Tokens are short-lived; regenerate and cache rather than reusing indefinitely.
+policies:
+- name: Async Task Model
+  description: Submit a task, receive a task_id, then poll the matching query endpoint until status is succeed or failed. Assets return as URLs that expire and should be downloaded promptly.
+- name: Callback Notifications
+  description: A callback_url may be supplied on task creation to be notified on completion instead of tight polling.
+- name: Backoff Strategy
+  description: Poll on an interval with exponential backoff and jitter; honor 429 responses and any Retry-After header.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

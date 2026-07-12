@@ -1,0 +1,125 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Kling AI
+providerId: kling-ai
+created: '2026-07-11'
+modified: '2026-07-11'
+reconciled: false
+tags:
+- Video Generation
+- AI Video
+- Generative AI
+- Resource Pack
+- Plans
+description: >-
+  The Kling AI Open Platform (developer API) is billed on a prepaid
+  resource-pack model that is separate from the consumer Kling app membership
+  plans. New developer accounts receive a small amount of free credit (reported
+  around one US dollar) to trial the API. Beyond that, callers purchase prepaid
+  resource packs; unlike the consumer app, failed API tasks are reported not to
+  deduct resources. Consumption scales with the work performed - video costs
+  substantially more than image generation, professional mode costs more than
+  standard mode, and native audio (on audio-capable models) roughly doubles the
+  per-second rate. Exact per-unit and per-pack prices below are indicative and
+  NOT reconciled against the live pricing page.
+notes: >-
+  Values are honestly modeled from Kling documentation and third-party pricing
+  writeups and must be reconciled against https://app.klingai.com/global/dev
+  and the Kling API pricing page. Resource-pack SKUs (reported around 9.80 and
+  98 USD trial packs plus custom/enterprise volume) and per-second credit rates
+  vary by model and mode.
+sources:
+- https://app.klingai.com/global/dev/document-api/quickStart/productIntroduction/overview
+- https://klingai.com
+- https://kling.ai/dev/pricing
+plans:
+- id: kling-api-free-trial
+  name: Developer Free Trial Credit
+  type: free
+  description: >-
+    New Open Platform accounts receive a small free credit grant (reported
+    around one US dollar) to test text-to-video, image-to-video, and image
+    generation before purchasing a resource pack.
+  entries:
+  - label: Trial Credit
+    name: trial_credit
+    type: usage
+    metric: credits
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: free on signup (reported ~1 USD grant)
+    userMultiplied: false
+  elements:
+  - name: Text-to-Video
+  - name: Image-to-Video
+  - name: Image Generation
+- id: kling-api-resource-pack
+  name: Prepaid Resource Pack
+  type: usage
+  description: >-
+    Prepaid resource packs consumed as tasks run. Consumption is metered per
+    second of generated video (and per generated image), with multipliers for
+    professional mode and native audio. Failed API tasks are reported not to
+    deduct resources.
+  entries:
+  - label: Video Generation
+    name: video_generation
+    type: usage
+    metric: seconds
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: per-second credit draw from prepaid pack (varies by model and std/pro mode)
+    userMultiplied: false
+  - label: Image Generation
+    name: image_generation
+    type: usage
+    metric: images
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: per-image credit draw from prepaid pack
+    userMultiplied: false
+  - label: Native Audio Surcharge
+    name: native_audio
+    type: usage
+    metric: seconds
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: roughly 2x the base per-second rate on audio-capable models
+    userMultiplied: false
+  elements:
+  - name: All Video and Image Endpoints
+  - name: No Charge on Failed Tasks
+  - name: Concurrency by Account
+- id: kling-api-enterprise
+  name: Enterprise / Custom Volume
+  type: enterprise
+  description: >-
+    Custom or large-volume resource-pack purchases, higher concurrency, and
+    negotiated terms for production workloads. Contact Kling AI.
+  entries:
+  - label: Custom Agreement
+    name: enterprise
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: Custom Volume Pricing
+  - name: Higher Concurrency
+  - name: Priority Support
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

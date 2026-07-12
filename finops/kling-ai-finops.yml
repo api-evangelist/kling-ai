@@ -1,0 +1,102 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Kling AI
+providerId: kling-ai
+created: '2026-07-11'
+modified: '2026-07-11'
+reconciled: false
+tags:
+- Video Generation
+- AI Video
+- Generative AI
+- Resource Pack
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Kling AI Open Platform spend. The developer API is prepaid:
+  accounts buy resource packs and draw them down as generation tasks run. The
+  dominant cost driver is video generation, metered by seconds of output and
+  multiplied by professional mode and native audio; image generation and
+  virtual try-on are cheaper per unit. Because it is prepaid and failed API
+  tasks are reported not to deduct resources, spend is bounded by pack balance
+  rather than an open-ended monthly invoice. Per-unit rates are not reconciled
+  here.
+notes: >-
+  Reconcile per-second video rates, per-image rates, and resource-pack SKUs
+  against the live Kling AI Open Platform pricing before using for budgeting.
+  Optimize by choosing standard over professional mode where quality allows,
+  keeping clips short, and only enabling native audio when needed.
+sources:
+- https://app.klingai.com/global/dev/document-api/quickStart/productIntroduction/overview
+- https://klingai.com
+- https://kling.ai/dev/pricing
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Kling AI
+serviceCategory: AI and Machine Learning
+billingModel:
+  pricingCategory: Usage-Based
+  billingFrequency: Prepaid
+  billingCurrency: USD
+  chargeCategories:
+  - Purchase
+  - Usage
+  - Adjustment
+focusColumns:
+  ServiceName: Kling AI Open Platform
+  ServiceCategory: AI and Machine Learning
+  ProviderName: Kling AI
+  PublisherName: Kling AI
+  InvoiceIssuerName: Kling AI
+  BillingCurrency: USD
+  ChargeCategory: Usage
+  PricingCategory: Usage-Based
+meters:
+- name: video_seconds
+  description: Seconds of generated video across text-to-video, image-to-video, multi-image, extension, lip-sync, and effects, drawn from prepaid resource packs.
+  unit: seconds
+  aggregation: sum
+  dimensions:
+  - account
+  - model
+  - mode
+- name: native_audio_seconds
+  description: Seconds of video generated with native audio on audio-capable models, at roughly double the base per-second rate.
+  unit: seconds
+  aggregation: sum
+  dimensions:
+  - account
+  - model
+- name: images_generated
+  description: Still images produced via Kolors image generation and virtual try-on.
+  unit: images
+  aggregation: sum
+  dimensions:
+  - account
+  - model
+- name: resource_pack_balance
+  description: Remaining prepaid resource-pack balance available for consumption.
+  unit: credits
+  aggregation: last
+  dimensions:
+  - account
+  - resource_pack
+principles:
+- name: Visibility
+  description: Track video-seconds and images per model and mode via the account resource query; monitor resource-pack balance to avoid task rejections on depletion.
+- name: Allocation
+  description: Separate Access Keys per workload/environment so consumption maps to teams or projects.
+- name: Optimization
+  description: Prefer standard mode over professional where acceptable, keep durations short, enable native audio only when required, and rely on no-charge-on-failure to avoid paying for failed renders.
+- name: Accountability
+  description: Assign owners per key/project and review resource-pack burn-down against budget.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

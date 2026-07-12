@@ -1,0 +1,23 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/kling-ai-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  description: >-
+    Kling AI authenticates each request with a short-lived JSON Web Token
+    signed from an Access Key / Secret Key pair issued in the Kling AI Open
+    Platform console. The JWT is created client-side with the HS256 algorithm:
+    the Access Key becomes the `iss` claim, `exp` is set roughly 30 minutes in
+    the future, and `nbf` is set about 5 seconds in the past. The Secret Key is
+    the signing secret. The resulting token is sent as `Authorization: Bearer
+    <token>` on every call. Because tokens expire in ~30 minutes, clients
+    typically regenerate (and cache) tokens rather than reusing a static key.
+  sources:
+  - openapi/kling-ai-openapi.yml
+  - https://app.klingai.com/global/dev/document-api/apiReference/commonInfo

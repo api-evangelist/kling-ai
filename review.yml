@@ -1,0 +1,99 @@
+aid: kling-ai
+name: Kling AI
+review:
+  question: Does Kling AI expose a documented public WebSocket API?
+  answer: false
+  date: '2026-07-11'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was authored. Kling AI's Open Platform is an
+    asynchronous REST API, but the asynchrony is task-based, not transport
+    push: the client submits a task with POST, receives a task_id, then polls a
+    REST GET endpoint (or supplies a callback_url that Kling POSTs to on
+    completion). There is no server-push streaming transport (WebSocket or SSE)
+    on Kling's own API to model. Completion callbacks are ordinary
+    server-to-endpoint HTTP webhooks, not a bidirectional socket.
+findings:
+  summary: |
+    Kling AI (Kuaishou) does not publish a documented public WebSocket API. The
+    Kling AI Open Platform is a REST API under https://api.klingai.com,
+    authenticated with a short-lived HS256 JWT signed from an Access Key /
+    Secret Key pair and passed as Authorization: Bearer <token>. Every
+    generative capability - text-to-video, image-to-video, multi-image-to-video,
+    video extension, lip-sync, video effects, Kolors image generation, and
+    Kolors virtual try-on - uses the same asynchronous pattern: POST to create a
+    task returns a task_id, and the caller polls a REST GET endpoint by task_id
+    (or receives a callback webhook) until the task succeeds and asset URLs are
+    returned. No realtime, bidirectional, or streaming WebSocket (ws:// or
+    wss://) endpoint is documented.
+  accessModel: |
+    Access is gated: developers register on the Kling AI Open Platform, obtain
+    an Access Key / Secret Key, and generate JWTs client-side to call the API.
+    Kling's official reference pages return HTTP 446 to automated fetchers,
+    so the exact request/response field schemas were cross-referenced against
+    multiple public Kling API wrappers and third-party docs rather than scraped
+    from the source. The endpoint paths, JWT auth, async task model, and model
+    catalog are well corroborated; fine-grained field schemas in the OpenAPI are
+    honestly modeled and flagged endpointsModeled.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.klingai.com
+      documented: true
+      note: All create-task and query-task calls are request/response REST over HTTPS.
+    - protocol: Webhook
+      scheme: https
+      documented: true
+      note: Optional callback_url on task creation; Kling POSTs completion to it. Server-to-endpoint HTTP, not WebSocket.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented anywhere in the Kling AI Open Platform reference as of the review date.
+  endpointsModeled: true
+  endpointsConfirmedRest:
+    - POST https://api.klingai.com/v1/videos/text2video
+    - GET  https://api.klingai.com/v1/videos/text2video/{task_id}
+    - POST https://api.klingai.com/v1/videos/image2video
+    - GET  https://api.klingai.com/v1/videos/image2video/{task_id}
+    - POST https://api.klingai.com/v1/videos/multi-image2video
+    - GET  https://api.klingai.com/v1/videos/multi-image2video/{task_id}
+    - POST https://api.klingai.com/v1/videos/video-extend
+    - GET  https://api.klingai.com/v1/videos/video-extend/{task_id}
+    - POST https://api.klingai.com/v1/videos/lip-sync
+    - GET  https://api.klingai.com/v1/videos/lip-sync/{task_id}
+    - POST https://api.klingai.com/v1/videos/effects
+    - GET  https://api.klingai.com/v1/videos/effects/{task_id}
+    - POST https://api.klingai.com/v1/images/generations
+    - GET  https://api.klingai.com/v1/images/generations/{task_id}
+    - POST https://api.klingai.com/v1/images/kolors-virtual-try-on
+    - GET  https://api.klingai.com/v1/images/kolors-virtual-try-on/{task_id}
+    - GET  https://api.klingai.com/account/costs
+sources:
+  - url: https://app.klingai.com/global/dev/document-api/quickStart/productIntroduction/overview
+    type: Documentation
+    note: Open Platform overview; REST + JWT + async task model. Blocks automated fetch (HTTP 446).
+  - url: https://app.klingai.com/global/dev/document-api/apiReference/model/textToVideo
+    type: APIReference
+    note: Text-to-video create/query task reference.
+  - url: https://app.klingai.com/global/dev/document-api/apiReference/model/imageToVideo
+    type: APIReference
+    note: Image-to-video create/query task reference.
+  - url: https://app.klingai.com/global/dev/document-api/apiReference/commonInfo
+    type: APIReference
+    note: Common info - base URL api.klingai.com, JWT (HS256, iss/exp/nbf), Bearer token.
+  - url: https://github.com/aself101/kling-api
+    type: SourceCode
+    note: Node.js Kling API wrapper - JWT (30-min expiry, 5-min buffer) plus text2video, image2video, extend, avatar/lip-sync, image generation, expand, multi-image, account info.
+  - url: https://piapi.ai/docs/kling-api/create-task
+    type: Documentation
+    note: Third-party mirror confirming the async create-then-poll task pattern over Kling's Kuaishou backend.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket protocol surface exists. Kling AI's own public API is
+    request/response REST with an asynchronous task model (create then poll,
+    plus optional completion webhooks). No AsyncAPI document was created because
+    there is no server-push transport (WebSocket or SSE) on Kling's own API to
+    model.

@@ -1,0 +1,211 @@
+{
+  "info": {
+    "name": "Kling AI Open Platform API",
+    "description": "Asynchronous generative video and image API for Kuaishou's Kling models. Create a task with POST, then poll the matching GET endpoint by task_id (or supply a callback_url). Base URL: https://api.klingai.com. Auth is a short-lived HS256 JWT (signed from an Access Key / Secret Key) passed as a Bearer token.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      { "key": "token", "value": "{{jwtToken}}", "type": "string" }
+    ]
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://api.klingai.com", "type": "string" },
+    { "key": "jwtToken", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Text-to-Video",
+      "item": [
+        {
+          "name": "Create text-to-video task",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"model_name\": \"kling-v2-6\",\n  \"prompt\": \"A cinematic drone shot flying over a neon city at night\",\n  \"mode\": \"std\",\n  \"aspect_ratio\": \"16:9\",\n  \"duration\": \"5\"\n}" },
+            "url": { "raw": "{{baseUrl}}/v1/videos/text2video", "host": ["{{baseUrl}}"], "path": ["v1", "videos", "text2video"] },
+            "description": "Submit a text prompt to generate a video. Returns a task_id to poll."
+          }
+        },
+        {
+          "name": "Query text-to-video task",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/v1/videos/text2video/:task_id", "host": ["{{baseUrl}}"], "path": ["v1", "videos", "text2video", ":task_id"], "variable": [{ "key": "task_id", "value": "" }] },
+            "description": "Poll until task_status is succeed to retrieve the generated video URL."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Image-to-Video",
+      "item": [
+        {
+          "name": "Create image-to-video task",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"model_name\": \"kling-v2-6\",\n  \"image\": \"https://example.com/start.jpg\",\n  \"prompt\": \"the subject slowly turns and smiles\",\n  \"mode\": \"std\",\n  \"duration\": \"5\"\n}" },
+            "url": { "raw": "{{baseUrl}}/v1/videos/image2video", "host": ["{{baseUrl}}"], "path": ["v1", "videos", "image2video"] },
+            "description": "Animate a start image (and optional end image) with a motion prompt."
+          }
+        },
+        {
+          "name": "Query image-to-video task",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/v1/videos/image2video/:task_id", "host": ["{{baseUrl}}"], "path": ["v1", "videos", "image2video", ":task_id"], "variable": [{ "key": "task_id", "value": "" }] },
+            "description": "Poll for the generated video URL."
+          }
+        },
+        {
+          "name": "Create multi-image-to-video task",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"model_name\": \"kling-v1-6\",\n  \"image_list\": [\"https://example.com/a.jpg\", \"https://example.com/b.jpg\"],\n  \"prompt\": \"the two characters meet and shake hands\",\n  \"duration\": \"5\"\n}" },
+            "url": { "raw": "{{baseUrl}}/v1/videos/multi-image2video", "host": ["{{baseUrl}}"], "path": ["v1", "videos", "multi-image2video"] },
+            "description": "Compose a video from multiple reference images plus a prompt."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Video Extension",
+      "item": [
+        {
+          "name": "Create video-extend task",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"video_id\": \"ORIGIN_TASK_ID\",\n  \"prompt\": \"continue the camera push forward\"\n}" },
+            "url": { "raw": "{{baseUrl}}/v1/videos/video-extend", "host": ["{{baseUrl}}"], "path": ["v1", "videos", "video-extend"] },
+            "description": "Extend a previously generated video by its origin task/video id."
+          }
+        },
+        {
+          "name": "Query video-extend task",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/v1/videos/video-extend/:task_id", "host": ["{{baseUrl}}"], "path": ["v1", "videos", "video-extend", ":task_id"], "variable": [{ "key": "task_id", "value": "" }] },
+            "description": "Poll for the extended video URL."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Lip-Sync",
+      "item": [
+        {
+          "name": "Create lip-sync task",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"video_id\": \"ORIGIN_TASK_ID\",\n  \"mode\": \"text2video\",\n  \"text\": \"Hello and welcome to the show\",\n  \"voice_id\": \"en_female_1\"\n}" },
+            "url": { "raw": "{{baseUrl}}/v1/videos/lip-sync", "host": ["{{baseUrl}}"], "path": ["v1", "videos", "lip-sync"] },
+            "description": "Sync a video subject's lips to supplied text (TTS) or an audio file."
+          }
+        },
+        {
+          "name": "Query lip-sync task",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/v1/videos/lip-sync/:task_id", "host": ["{{baseUrl}}"], "path": ["v1", "videos", "lip-sync", ":task_id"], "variable": [{ "key": "task_id", "value": "" }] },
+            "description": "Poll for the lip-synced video URL."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Video Effects",
+      "item": [
+        {
+          "name": "Create video-effects task",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"effect_scene\": \"hug\",\n  \"model_name\": \"kling-v1-6\",\n  \"images\": [\"https://example.com/p1.jpg\", \"https://example.com/p2.jpg\"],\n  \"duration\": \"5\"\n}" },
+            "url": { "raw": "{{baseUrl}}/v1/videos/effects", "host": ["{{baseUrl}}"], "path": ["v1", "videos", "effects"] },
+            "description": "Apply a preset creative effect to one or more input images."
+          }
+        },
+        {
+          "name": "Query video-effects task",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/v1/videos/effects/:task_id", "host": ["{{baseUrl}}"], "path": ["v1", "videos", "effects", ":task_id"], "variable": [{ "key": "task_id", "value": "" }] },
+            "description": "Poll for the effect video URL."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Image Generation",
+      "item": [
+        {
+          "name": "Create image-generation task",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"model_name\": \"kling-v2-1\",\n  \"prompt\": \"a photorealistic red panda barista, studio lighting\",\n  \"n\": 1,\n  \"aspect_ratio\": \"1:1\"\n}" },
+            "url": { "raw": "{{baseUrl}}/v1/images/generations", "host": ["{{baseUrl}}"], "path": ["v1", "images", "generations"] },
+            "description": "Generate still images from a text prompt with the Kolors models."
+          }
+        },
+        {
+          "name": "Query image-generation task",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/v1/images/generations/:task_id", "host": ["{{baseUrl}}"], "path": ["v1", "images", "generations", ":task_id"], "variable": [{ "key": "task_id", "value": "" }] },
+            "description": "Poll for the generated image URLs."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Virtual Try-On",
+      "item": [
+        {
+          "name": "Create virtual try-on task",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"model_name\": \"kolors-virtual-try-on-v1-5\",\n  \"human_image\": \"https://example.com/person.jpg\",\n  \"cloth_image\": \"https://example.com/shirt.jpg\"\n}" },
+            "url": { "raw": "{{baseUrl}}/v1/images/kolors-virtual-try-on", "host": ["{{baseUrl}}"], "path": ["v1", "images", "kolors-virtual-try-on"] },
+            "description": "Composite a garment image onto a person/model image."
+          }
+        },
+        {
+          "name": "Query virtual try-on task",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/v1/images/kolors-virtual-try-on/:task_id", "host": ["{{baseUrl}}"], "path": ["v1", "images", "kolors-virtual-try-on", ":task_id"], "variable": [{ "key": "task_id", "value": "" }] },
+            "description": "Poll for the try-on image URLs."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Account",
+      "item": [
+        {
+          "name": "Query resource-pack balances",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/account/costs", "host": ["{{baseUrl}}"], "path": ["account", "costs"] },
+            "description": "Return remaining prepaid resource-pack balances and consumption."
+          }
+        }
+      ]
+    }
+  ]
+}
