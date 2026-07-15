@@ -193,6 +193,8 @@ apis:
   description: Query account resource-pack balances and consumption so callers can
     monitor remaining prepaid credits for video and image generation.
 common:
+- type: AgenticAccess
+  url: agentic-access/kling-ai-agentic-access.yml
 - type: Authentication
   url: authentication/kling-ai-authentication.yml
 - type: LinkedIn
