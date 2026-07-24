@@ -1,0 +1,200 @@
+openapi: 3.0.3
+info:
+  title: Kling AI Open Platform Account Text-to-Video API
+  description: 'The Kling AI Open Platform is the developer API for Kuaishou''s Kling generative video and image models. Every capability follows the same asynchronous pattern: submit a task with POST (receiving a task_id), then poll the matching GET endpoint by task_id until status is succeed and the generated video or image URLs are returned. Generated asset URLs are short-lived and should be downloaded promptly. Authentication uses a JWT (HS256) signed from an Access Key / Secret Key pair, passed as a Bearer token; tokens are short-lived (about 30 minutes).
+
+
+    endpointsModeled: The overall path structure, async task model, JWT auth, and model catalog are grounded in Kling''s official Open Platform documentation and cross-referenced against multiple Kling API wrappers. Kling''s official reference pages block automated fetching (HTTP 446), so exact request/response field-level schemas here are honestly modeled on the documented behavior rather than copied verbatim, and should be reconciled against the live reference before code generation.'
+  version: '1.0'
+  contact:
+    name: Kling AI Open Platform
+    url: https://app.klingai.com/global/dev
+servers:
+- url: https://api.klingai.com
+  description: Kling AI Open Platform (global)
+security:
+- bearerAuth: []
+tags:
+- name: Text-to-Video
+  description: Generate video from a text prompt.
+paths:
+  /v1/videos/text2video:
+    post:
+      operationId: createTextToVideoTask
+      tags:
+      - Text-to-Video
+      summary: Create a text-to-video task
+      description: Submit a text prompt to generate a video. Returns a task_id to poll.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TextToVideoRequest'
+      responses:
+        '200':
+          description: Task accepted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskCreatedResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /v1/videos/text2video/{task_id}:
+    get:
+      operationId: getTextToVideoTask
+      tags:
+      - Text-to-Video
+      summary: Query a text-to-video task
+      parameters:
+      - $ref: '#/components/parameters/TaskId'
+      responses:
+        '200':
+          description: Task status and, when complete, the generated video URL.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VideoTaskResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    VideoTaskResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+        request_id:
+          type: string
+        data:
+          type: object
+          properties:
+            task_id:
+              type: string
+            task_status:
+              type: string
+              enum:
+              - submitted
+              - processing
+              - succeed
+              - failed
+            task_result:
+              type: object
+              properties:
+                videos:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      url:
+                        type: string
+                      duration:
+                        type: string
+    TextToVideoRequest:
+      type: object
+      required:
+      - prompt
+      properties:
+        model_name:
+          type: string
+          description: Video model, e.g. kling-v1, kling-v1-6, kling-v2-master, kling-v2-1, kling-v2-5-turbo, kling-v2-6.
+          example: kling-v2-6
+        prompt:
+          type: string
+          description: Text description of the video to generate.
+        negative_prompt:
+          type: string
+          description: Content to avoid.
+        cfg_scale:
+          type: number
+          description: Prompt adherence strength, 0 to 1.
+        mode:
+          type: string
+          enum:
+          - std
+          - pro
+          description: Standard or professional generation mode.
+        aspect_ratio:
+          type: string
+          enum:
+          - '16:9'
+          - '9:16'
+          - '1:1'
+          description: Output aspect ratio.
+        duration:
+          type: string
+          enum:
+          - '5'
+          - '10'
+          description: Video length in seconds.
+        callback_url:
+          type: string
+          description: Optional URL notified when the task completes.
+    TaskCreatedResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: Business status code (0 indicates success).
+        message:
+          type: string
+        request_id:
+          type: string
+        data:
+          type: object
+          properties:
+            task_id:
+              type: string
+            task_status:
+              type: string
+              enum:
+              - submitted
+              - processing
+              - succeed
+              - failed
+            created_at:
+              type: integer
+            updated_at:
+              type: integer
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+        request_id:
+          type: string
+  responses:
+    Unauthorized:
+      description: Missing, invalid, or expired JWT.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    RateLimited:
+      description: Too many requests or concurrency limit exceeded.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    TaskId:
+      name: task_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The task identifier returned by the create-task call.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'A JWT signed with HS256 from your Access Key (as the iss claim) and Secret Key, passed as Authorization: Bearer <token>. Tokens are short-lived (about 30 minutes; nbf is typically set 5 seconds in the past).'

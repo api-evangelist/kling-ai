@@ -1,0 +1,80 @@
+openapi: 3.0.3
+info:
+  title: Kling AI Open Platform Account API
+  description: 'The Kling AI Open Platform is the developer API for Kuaishou''s Kling generative video and image models. Every capability follows the same asynchronous pattern: submit a task with POST (receiving a task_id), then poll the matching GET endpoint by task_id until status is succeed and the generated video or image URLs are returned. Generated asset URLs are short-lived and should be downloaded promptly. Authentication uses a JWT (HS256) signed from an Access Key / Secret Key pair, passed as a Bearer token; tokens are short-lived (about 30 minutes).
+
+
+    endpointsModeled: The overall path structure, async task model, JWT auth, and model catalog are grounded in Kling''s official Open Platform documentation and cross-referenced against multiple Kling API wrappers. Kling''s official reference pages block automated fetching (HTTP 446), so exact request/response field-level schemas here are honestly modeled on the documented behavior rather than copied verbatim, and should be reconciled against the live reference before code generation.'
+  version: '1.0'
+  contact:
+    name: Kling AI Open Platform
+    url: https://app.klingai.com/global/dev
+servers:
+- url: https://api.klingai.com
+  description: Kling AI Open Platform (global)
+security:
+- bearerAuth: []
+tags:
+- name: Account
+  description: Resource-pack balance and consumption.
+paths:
+  /account/costs:
+    get:
+      operationId: getAccountResourcePacks
+      tags:
+      - Account
+      summary: Query resource-pack balances
+      description: Return remaining prepaid resource-pack balances and consumption.
+      parameters:
+      - name: start_time
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Start of the query window as a Unix millisecond timestamp.
+      - name: end_time
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: End of the query window as a Unix millisecond timestamp.
+      responses:
+        '200':
+          description: Resource-pack balance and consumption detail.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountCostsResponse'
+components:
+  schemas:
+    AccountCostsResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            resource_pack_subscribe_infos:
+              type: array
+              items:
+                type: object
+                properties:
+                  resource_pack_name:
+                    type: string
+                  resource_pack_type:
+                    type: string
+                  total_quantity:
+                    type: number
+                  remaining_quantity:
+                    type: number
+                  status:
+                    type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'A JWT signed with HS256 from your Access Key (as the iss claim) and Secret Key, passed as Authorization: Bearer <token>. Tokens are short-lived (about 30 minutes; nbf is typically set 5 seconds in the past).'

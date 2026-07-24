@@ -1,0 +1,158 @@
+openapi: 3.0.3
+info:
+  title: Kling AI Open Platform Account Lip-Sync API
+  description: 'The Kling AI Open Platform is the developer API for Kuaishou''s Kling generative video and image models. Every capability follows the same asynchronous pattern: submit a task with POST (receiving a task_id), then poll the matching GET endpoint by task_id until status is succeed and the generated video or image URLs are returned. Generated asset URLs are short-lived and should be downloaded promptly. Authentication uses a JWT (HS256) signed from an Access Key / Secret Key pair, passed as a Bearer token; tokens are short-lived (about 30 minutes).
+
+
+    endpointsModeled: The overall path structure, async task model, JWT auth, and model catalog are grounded in Kling''s official Open Platform documentation and cross-referenced against multiple Kling API wrappers. Kling''s official reference pages block automated fetching (HTTP 446), so exact request/response field-level schemas here are honestly modeled on the documented behavior rather than copied verbatim, and should be reconciled against the live reference before code generation.'
+  version: '1.0'
+  contact:
+    name: Kling AI Open Platform
+    url: https://app.klingai.com/global/dev
+servers:
+- url: https://api.klingai.com
+  description: Kling AI Open Platform (global)
+security:
+- bearerAuth: []
+tags:
+- name: Lip-Sync
+  description: Sync a subject's lips to speech or audio.
+paths:
+  /v1/videos/lip-sync:
+    post:
+      operationId: createLipSyncTask
+      tags:
+      - Lip-Sync
+      summary: Create a lip-sync task
+      description: Sync a video subject's lips to supplied text (TTS) or an audio file.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LipSyncRequest'
+      responses:
+        '200':
+          description: Task accepted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskCreatedResponse'
+  /v1/videos/lip-sync/{task_id}:
+    get:
+      operationId: getLipSyncTask
+      tags:
+      - Lip-Sync
+      summary: Query a lip-sync task
+      parameters:
+      - $ref: '#/components/parameters/TaskId'
+      responses:
+        '200':
+          description: Task status and, when complete, the lip-synced video URL.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VideoTaskResponse'
+components:
+  schemas:
+    VideoTaskResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+        request_id:
+          type: string
+        data:
+          type: object
+          properties:
+            task_id:
+              type: string
+            task_status:
+              type: string
+              enum:
+              - submitted
+              - processing
+              - succeed
+              - failed
+            task_result:
+              type: object
+              properties:
+                videos:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      url:
+                        type: string
+                      duration:
+                        type: string
+    TaskCreatedResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: Business status code (0 indicates success).
+        message:
+          type: string
+        request_id:
+          type: string
+        data:
+          type: object
+          properties:
+            task_id:
+              type: string
+            task_status:
+              type: string
+              enum:
+              - submitted
+              - processing
+              - succeed
+              - failed
+            created_at:
+              type: integer
+            updated_at:
+              type: integer
+    LipSyncRequest:
+      type: object
+      properties:
+        video_id:
+          type: string
+          description: Origin task/video id of the video to lip-sync.
+        video_url:
+          type: string
+          description: Alternatively, a URL to the source video.
+        mode:
+          type: string
+          enum:
+          - text2video
+          - audio2video
+          description: Drive lips from generated speech (text) or from an audio file.
+        text:
+          type: string
+          description: Text to synthesize into speech when mode is text2video.
+        voice_id:
+          type: string
+          description: Voice identifier for text-to-speech.
+        audio_url:
+          type: string
+          description: Audio file URL when mode is audio2video.
+        callback_url:
+          type: string
+  parameters:
+    TaskId:
+      name: task_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The task identifier returned by the create-task call.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'A JWT signed with HS256 from your Access Key (as the iss claim) and Secret Key, passed as Authorization: Bearer <token>. Tokens are short-lived (about 30 minutes; nbf is typically set 5 seconds in the past).'
