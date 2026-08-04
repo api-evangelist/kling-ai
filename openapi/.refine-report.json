@@ -1,0 +1,28 @@
+{
+  "provider": "kling-ai",
+  "sources": [
+    "kling-ai-account-api-openapi.yml",
+    "kling-ai-image-generation-api-openapi.yml",
+    "kling-ai-image-to-video-api-openapi.yml",
+    "kling-ai-lip-sync-api-openapi.yml",
+    "kling-ai-text-to-video-api-openapi.yml",
+    "kling-ai-video-effects-api-openapi.yml",
+    "kling-ai-video-extension-api-openapi.yml",
+    "kling-ai-virtual-try-on-api-openapi.yml"
+  ],
+  "outputs": [
+    "kling-ai-account-api-openapi.yml",
+    "kling-ai-image-generation-api-openapi.yml",
+    "kling-ai-image-to-video-api-openapi.yml",
+    "kling-ai-lip-sync-api-openapi.yml",
+    "kling-ai-text-to-video-api-openapi.yml",
+    "kling-ai-video-effects-api-openapi.yml",
+    "kling-ai-video-extension-api-openapi.yml",
+    "kling-ai-virtual-try-on-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
