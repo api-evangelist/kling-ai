@@ -1,0 +1,241 @@
+{
+  "item": [
+    {
+      "id": "68f2c454-93f2-45b9-9306-a96446453a9b",
+      "name": "Image Generation",
+      "description": {
+        "content": "Generate still images with the Kolors models.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "db7c2a52-efab-4618-bfc4-dab7a4f48424",
+          "name": "Create an image-generation task",
+          "request": {
+            "name": "Create an image-generation task",
+            "description": {
+              "content": "Generate still images from a text prompt with the Kolors models.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "images",
+                "generations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"prompt\": \"<string>\",\n  \"model_name\": \"<string>\",\n  \"negative_prompt\": \"<string>\",\n  \"image\": \"<string>\",\n  \"image_reference\": \"<string>\",\n  \"n\": \"<integer>\",\n  \"aspect_ratio\": \"<string>\",\n  \"callback_url\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5f781963-c34f-43cf-8f7d-1ce68b13ec5b",
+              "name": "Task accepted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "images",
+                    "generations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"prompt\": \"<string>\",\n  \"model_name\": \"kling-v2-1\",\n  \"negative_prompt\": \"<string>\",\n  \"image\": \"<string>\",\n  \"image_reference\": \"<string>\",\n  \"n\": \"<integer>\",\n  \"aspect_ratio\": \"<string>\",\n  \"callback_url\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7516,\n  \"message\": \"string\",\n  \"request_id\": \"string\",\n  \"data\": {\n    \"task_id\": \"string\",\n    \"task_status\": \"succeed\",\n    \"created_at\": 1723,\n    \"updated_at\": 152\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6d9dbad1-34f1-46e9-9030-c6f6a5593695",
+          "name": "Query an image-generation task",
+          "request": {
+            "name": "Query an image-generation task",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "images",
+                "generations",
+                ":task_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "task_id",
+                  "description": "(Required) The task identifier returned by the create-task call."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "994f0ae7-9836-4f59-a1b3-d2474ee365e4",
+              "name": "Task status and, when complete, the generated image URLs.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "images",
+                    "generations",
+                    ":task_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "task_id",
+                      "description": "(Required) The task identifier returned by the create-task call."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2376,\n  \"message\": \"string\",\n  \"request_id\": \"string\",\n  \"data\": {\n    \"task_id\": \"string\",\n    \"task_status\": \"succeed\",\n    \"task_result\": {\n      \"images\": [\n        {\n          \"index\": 475,\n          \"url\": \"string\"\n        },\n        {\n          \"index\": 7481,\n          \"url\": \"string\"\n        }\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.klingai.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "8f3ecae9-4849-4fca-a5f5-8bc203517bc3",
+    "name": "Kling AI Open Platform Account Image Generation API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Kling AI Open Platform is the developer API for Kuaishou's Kling generative video and image models. Every capability follows the same asynchronous pattern: submit a task with POST (receiving a task_id), then poll the matching GET endpoint by task_id until status is succeed and the generated video or image URLs are returned. Generated asset URLs are short-lived and should be downloaded promptly. Authentication uses a JWT (HS256) signed from an Access Key / Secret Key pair, passed as a Bearer token; tokens are short-lived (about 30 minutes).\n\nendpointsModeled: The overall path structure, async task model, JWT auth, and model catalog are grounded in Kling's official Open Platform documentation and cross-referenced against multiple Kling API wrappers. Kling's official reference pages block automated fetching (HTTP 446), so exact request/response field-level schemas here are honestly modeled on the documented behavior rather than copied verbatim, and should be reconciled against the live reference before code generation.\n\nContact Support:\n Name: Kling AI Open Platform",
+      "type": "text/plain"
+    }
+  }
+}

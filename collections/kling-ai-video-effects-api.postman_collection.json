@@ -1,0 +1,241 @@
+{
+  "item": [
+    {
+      "id": "71744765-a78a-4f25-b2bf-55d65f0eacf8",
+      "name": "Video Effects",
+      "description": {
+        "content": "Apply preset creative effects to images.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "380f995d-7b9c-4b73-a825-feb3216c0698",
+          "name": "Create a video-effects task",
+          "request": {
+            "name": "Create a video-effects task",
+            "description": {
+              "content": "Apply a preset creative effect to one or more input images.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "videos",
+                "effects"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"effect_scene\": \"<string>\",\n  \"model_name\": \"<string>\",\n  \"image\": \"<string>\",\n  \"images\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"duration\": \"<string>\",\n  \"callback_url\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c249527c-efc8-49f5-9e63-7076daeb0cc0",
+              "name": "Task accepted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "videos",
+                    "effects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"effect_scene\": \"<string>\",\n  \"model_name\": \"kling-v1-6\",\n  \"image\": \"<string>\",\n  \"images\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"duration\": \"<string>\",\n  \"callback_url\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 4475,\n  \"message\": \"string\",\n  \"request_id\": \"string\",\n  \"data\": {\n    \"task_id\": \"string\",\n    \"task_status\": \"submitted\",\n    \"created_at\": 2777,\n    \"updated_at\": 1305\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "01879a61-e272-4625-b0b6-b1234c8ce83a",
+          "name": "Query a video-effects task",
+          "request": {
+            "name": "Query a video-effects task",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "videos",
+                "effects",
+                ":task_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "task_id",
+                  "description": "(Required) The task identifier returned by the create-task call."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "069c5d6b-35ac-4ea2-8fc9-fb97e942525e",
+              "name": "Task status and, when complete, the effect video URL.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "videos",
+                    "effects",
+                    ":task_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "task_id",
+                      "description": "(Required) The task identifier returned by the create-task call."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 1471,\n  \"message\": \"string\",\n  \"request_id\": \"string\",\n  \"data\": {\n    \"task_id\": \"string\",\n    \"task_status\": \"succeed\",\n    \"task_result\": {\n      \"videos\": [\n        {\n          \"id\": \"string\",\n          \"url\": \"string\",\n          \"duration\": \"string\"\n        },\n        {\n          \"id\": \"string\",\n          \"url\": \"string\",\n          \"duration\": \"string\"\n        }\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.klingai.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "58e2e6c3-71db-4f00-8950-73cd448a7cda",
+    "name": "Kling AI Open Platform Account Video Effects API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Kling AI Open Platform is the developer API for Kuaishou's Kling generative video and image models. Every capability follows the same asynchronous pattern: submit a task with POST (receiving a task_id), then poll the matching GET endpoint by task_id until status is succeed and the generated video or image URLs are returned. Generated asset URLs are short-lived and should be downloaded promptly. Authentication uses a JWT (HS256) signed from an Access Key / Secret Key pair, passed as a Bearer token; tokens are short-lived (about 30 minutes).\n\nendpointsModeled: The overall path structure, async task model, JWT auth, and model catalog are grounded in Kling's official Open Platform documentation and cross-referenced against multiple Kling API wrappers. Kling's official reference pages block automated fetching (HTTP 446), so exact request/response field-level schemas here are honestly modeled on the documented behavior rather than copied verbatim, and should be reconciled against the live reference before code generation.\n\nContact Support:\n Name: Kling AI Open Platform",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kling AI Open Platform Account Text-to-Video API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Text-to-Video",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a text-to-video task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.klingai.com/v1/videos/text2video",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submit a text prompt to generate a video. Returns a task_id to poll."
+        },
+        {
+          "info": {
+            "name": "Query a text-to-video task",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.klingai.com/v1/videos/text2video/:task_id",
+            "params": [
+              {
+                "name": "task_id",
+                "value": "",
+                "type": "path",
+                "description": "The task identifier returned by the create-task call."
+              }
+            ]
+          },
+          "docs": "Query a text-to-video task"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,241 @@
+{
+  "item": [
+    {
+      "id": "8524c9aa-0bb5-40e3-bd9d-8ddccd7a5a5b",
+      "name": "Lip-Sync",
+      "description": {
+        "content": "Sync a subject's lips to speech or audio.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "19620200-bed7-4629-a062-c155684ea385",
+          "name": "Create a lip-sync task",
+          "request": {
+            "name": "Create a lip-sync task",
+            "description": {
+              "content": "Sync a video subject's lips to supplied text (TTS) or an audio file.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "videos",
+                "lip-sync"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"video_id\": \"<string>\",\n  \"video_url\": \"<string>\",\n  \"mode\": \"<string>\",\n  \"text\": \"<string>\",\n  \"voice_id\": \"<string>\",\n  \"audio_url\": \"<string>\",\n  \"callback_url\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a3e6f889-5539-4e4a-8a5f-10d96043110f",
+              "name": "Task accepted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "videos",
+                    "lip-sync"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"video_id\": \"<string>\",\n  \"video_url\": \"<string>\",\n  \"mode\": \"<string>\",\n  \"text\": \"<string>\",\n  \"voice_id\": \"<string>\",\n  \"audio_url\": \"<string>\",\n  \"callback_url\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 3067,\n  \"message\": \"string\",\n  \"request_id\": \"string\",\n  \"data\": {\n    \"task_id\": \"string\",\n    \"task_status\": \"failed\",\n    \"created_at\": 2561,\n    \"updated_at\": 7749\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4a9eac8e-79ac-4977-aaab-5cd37d2e1b53",
+          "name": "Query a lip-sync task",
+          "request": {
+            "name": "Query a lip-sync task",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "videos",
+                "lip-sync",
+                ":task_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "task_id",
+                  "description": "(Required) The task identifier returned by the create-task call."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "be31960d-cb97-40cb-a748-e52884a3ff6b",
+              "name": "Task status and, when complete, the lip-synced video URL.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "videos",
+                    "lip-sync",
+                    ":task_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "task_id",
+                      "description": "(Required) The task identifier returned by the create-task call."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8620,\n  \"message\": \"string\",\n  \"request_id\": \"string\",\n  \"data\": {\n    \"task_id\": \"string\",\n    \"task_status\": \"failed\",\n    \"task_result\": {\n      \"videos\": [\n        {\n          \"id\": \"string\",\n          \"url\": \"string\",\n          \"duration\": \"string\"\n        },\n        {\n          \"id\": \"string\",\n          \"url\": \"string\",\n          \"duration\": \"string\"\n        }\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.klingai.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c36e8023-c3f2-4704-a51f-61e9036e92f0",
+    "name": "Kling AI Open Platform Account Lip-Sync API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Kling AI Open Platform is the developer API for Kuaishou's Kling generative video and image models. Every capability follows the same asynchronous pattern: submit a task with POST (receiving a task_id), then poll the matching GET endpoint by task_id until status is succeed and the generated video or image URLs are returned. Generated asset URLs are short-lived and should be downloaded promptly. Authentication uses a JWT (HS256) signed from an Access Key / Secret Key pair, passed as a Bearer token; tokens are short-lived (about 30 minutes).\n\nendpointsModeled: The overall path structure, async task model, JWT auth, and model catalog are grounded in Kling's official Open Platform documentation and cross-referenced against multiple Kling API wrappers. Kling's official reference pages block automated fetching (HTTP 446), so exact request/response field-level schemas here are honestly modeled on the documented behavior rather than copied verbatim, and should be reconciled against the live reference before code generation.\n\nContact Support:\n Name: Kling AI Open Platform",
+      "type": "text/plain"
+    }
+  }
+}

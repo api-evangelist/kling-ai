@@ -1,0 +1,241 @@
+{
+  "item": [
+    {
+      "id": "3817111e-688f-4e49-a4b2-f6eb494713c6",
+      "name": "Video Extension",
+      "description": {
+        "content": "Extend an existing generated video.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "aae98af6-0637-4450-a1d2-ad87605694ea",
+          "name": "Create a video-extension task",
+          "request": {
+            "name": "Create a video-extension task",
+            "description": {
+              "content": "Extend an existing generated video by its origin task id.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "videos",
+                "video-extend"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"video_id\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"callback_url\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "efbe1521-1fc4-4a77-a7a0-a5afeb8859f8",
+              "name": "Task accepted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "videos",
+                    "video-extend"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"video_id\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"callback_url\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2683,\n  \"message\": \"string\",\n  \"request_id\": \"string\",\n  \"data\": {\n    \"task_id\": \"string\",\n    \"task_status\": \"failed\",\n    \"created_at\": 5763,\n    \"updated_at\": 5891\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "90daac5e-fb3e-4f78-84e0-71f5b45c2a86",
+          "name": "Query a video-extension task",
+          "request": {
+            "name": "Query a video-extension task",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "videos",
+                "video-extend",
+                ":task_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "task_id",
+                  "description": "(Required) The task identifier returned by the create-task call."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cf489120-0d10-4f9f-b8e8-8ab9d072df71",
+              "name": "Task status and, when complete, the extended video URL.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "videos",
+                    "video-extend",
+                    ":task_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "task_id",
+                      "description": "(Required) The task identifier returned by the create-task call."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8644,\n  \"message\": \"string\",\n  \"request_id\": \"string\",\n  \"data\": {\n    \"task_id\": \"string\",\n    \"task_status\": \"processing\",\n    \"task_result\": {\n      \"videos\": [\n        {\n          \"id\": \"string\",\n          \"url\": \"string\",\n          \"duration\": \"string\"\n        },\n        {\n          \"id\": \"string\",\n          \"url\": \"string\",\n          \"duration\": \"string\"\n        }\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.klingai.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ab88f7e1-fadb-4c70-a7ea-b7c9dbabd9aa",
+    "name": "Kling AI Open Platform Account Video Extension API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Kling AI Open Platform is the developer API for Kuaishou's Kling generative video and image models. Every capability follows the same asynchronous pattern: submit a task with POST (receiving a task_id), then poll the matching GET endpoint by task_id until status is succeed and the generated video or image URLs are returned. Generated asset URLs are short-lived and should be downloaded promptly. Authentication uses a JWT (HS256) signed from an Access Key / Secret Key pair, passed as a Bearer token; tokens are short-lived (about 30 minutes).\n\nendpointsModeled: The overall path structure, async task model, JWT auth, and model catalog are grounded in Kling's official Open Platform documentation and cross-referenced against multiple Kling API wrappers. Kling's official reference pages block automated fetching (HTTP 446), so exact request/response field-level schemas here are honestly modeled on the documented behavior rather than copied verbatim, and should be reconciled against the live reference before code generation.\n\nContact Support:\n Name: Kling AI Open Platform",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,241 @@
+{
+  "item": [
+    {
+      "id": "c776d77c-ec1f-4470-8eed-58618745e5a8",
+      "name": "Virtual Try-On",
+      "description": {
+        "content": "Composite a garment onto a person image.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "be898ab9-ad27-4355-b658-902c8219e452",
+          "name": "Create a virtual try-on task",
+          "request": {
+            "name": "Create a virtual try-on task",
+            "description": {
+              "content": "Composite a garment image onto a person/model image.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "images",
+                "kolors-virtual-try-on"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"human_image\": \"<string>\",\n  \"cloth_image\": \"<string>\",\n  \"model_name\": \"<string>\",\n  \"callback_url\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2e7a8614-1d1b-4e97-908d-a7c901b117b4",
+              "name": "Task accepted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "images",
+                    "kolors-virtual-try-on"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"human_image\": \"<string>\",\n  \"cloth_image\": \"<string>\",\n  \"model_name\": \"kolors-virtual-try-on-v1-5\",\n  \"callback_url\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 1761,\n  \"message\": \"string\",\n  \"request_id\": \"string\",\n  \"data\": {\n    \"task_id\": \"string\",\n    \"task_status\": \"succeed\",\n    \"created_at\": 3285,\n    \"updated_at\": 7244\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "68cd1781-6ba7-4e45-a1cf-ec44679dc2bf",
+          "name": "Query a virtual try-on task",
+          "request": {
+            "name": "Query a virtual try-on task",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "images",
+                "kolors-virtual-try-on",
+                ":task_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "task_id",
+                  "description": "(Required) The task identifier returned by the create-task call."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b39f8e41-c782-4725-a807-1a2b879ddfb1",
+              "name": "Task status and, when complete, the try-on image URLs.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "images",
+                    "kolors-virtual-try-on",
+                    ":task_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "task_id",
+                      "description": "(Required) The task identifier returned by the create-task call."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 3579,\n  \"message\": \"string\",\n  \"request_id\": \"string\",\n  \"data\": {\n    \"task_id\": \"string\",\n    \"task_status\": \"succeed\",\n    \"task_result\": {\n      \"images\": [\n        {\n          \"index\": 5010,\n          \"url\": \"string\"\n        },\n        {\n          \"index\": 2381,\n          \"url\": \"string\"\n        }\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.klingai.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "8f4e0c6b-a58e-4ccb-a99d-5f0b3346048b",
+    "name": "Kling AI Open Platform Account Virtual Try-On API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Kling AI Open Platform is the developer API for Kuaishou's Kling generative video and image models. Every capability follows the same asynchronous pattern: submit a task with POST (receiving a task_id), then poll the matching GET endpoint by task_id until status is succeed and the generated video or image URLs are returned. Generated asset URLs are short-lived and should be downloaded promptly. Authentication uses a JWT (HS256) signed from an Access Key / Secret Key pair, passed as a Bearer token; tokens are short-lived (about 30 minutes).\n\nendpointsModeled: The overall path structure, async task model, JWT auth, and model catalog are grounded in Kling's official Open Platform documentation and cross-referenced against multiple Kling API wrappers. Kling's official reference pages block automated fetching (HTTP 446), so exact request/response field-level schemas here are honestly modeled on the documented behavior rather than copied verbatim, and should be reconciled against the live reference before code generation.\n\nContact Support:\n Name: Kling AI Open Platform",
+      "type": "text/plain"
+    }
+  }
+}

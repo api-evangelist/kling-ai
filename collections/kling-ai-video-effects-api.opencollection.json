@@ -1,0 +1,58 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kling AI Open Platform Account Video Effects API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Video Effects",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a video-effects task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.klingai.com/v1/videos/effects",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Apply a preset creative effect to one or more input images."
+        },
+        {
+          "info": {
+            "name": "Query a video-effects task",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.klingai.com/v1/videos/effects/:task_id",
+            "params": [
+              {
+                "name": "task_id",
+                "value": "",
+                "type": "path",
+                "description": "The task identifier returned by the create-task call."
+              }
+            ]
+          },
+          "docs": "Query a video-effects task"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

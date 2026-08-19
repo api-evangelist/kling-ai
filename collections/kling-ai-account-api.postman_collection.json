@@ -1,0 +1,143 @@
+{
+  "item": [
+    {
+      "id": "66058aec-962a-4d8b-9fce-1f61f549e891",
+      "name": "Account",
+      "description": {
+        "content": "Resource-pack balance and consumption.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "05faa3f7-c031-4b5f-b160-a6b36f348695",
+          "name": "Query resource-pack balances",
+          "request": {
+            "name": "Query resource-pack balances",
+            "description": {
+              "content": "Return remaining prepaid resource-pack balances and consumption.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "account",
+                "costs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "start_time",
+                  "value": "<integer>",
+                  "description": "Start of the query window as a Unix millisecond timestamp."
+                },
+                {
+                  "disabled": false,
+                  "key": "end_time",
+                  "value": "<integer>",
+                  "description": "End of the query window as a Unix millisecond timestamp."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "71b01884-dad6-4586-a0a8-013e3dbb4601",
+              "name": "Resource-pack balance and consumption detail.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    "costs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_time",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "end_time",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8235,\n  \"message\": \"string\",\n  \"data\": {\n    \"resource_pack_subscribe_infos\": [\n      {\n        \"resource_pack_name\": \"string\",\n        \"resource_pack_type\": \"string\",\n        \"total_quantity\": 369.8962010472084,\n        \"remaining_quantity\": 4083.352432785703,\n        \"status\": \"string\"\n      },\n      {\n        \"resource_pack_name\": \"string\",\n        \"resource_pack_type\": \"string\",\n        \"total_quantity\": 8108.014597337789,\n        \"remaining_quantity\": 9456.708736226683,\n        \"status\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.klingai.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "28c252b4-4cfa-41b6-b514-ce7bbe6b89f3",
+    "name": "Kling AI Open Platform Account API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Kling AI Open Platform is the developer API for Kuaishou's Kling generative video and image models. Every capability follows the same asynchronous pattern: submit a task with POST (receiving a task_id), then poll the matching GET endpoint by task_id until status is succeed and the generated video or image URLs are returned. Generated asset URLs are short-lived and should be downloaded promptly. Authentication uses a JWT (HS256) signed from an Access Key / Secret Key pair, passed as a Bearer token; tokens are short-lived (about 30 minutes).\n\nendpointsModeled: The overall path structure, async task model, JWT auth, and model catalog are grounded in Kling's official Open Platform documentation and cross-referenced against multiple Kling API wrappers. Kling's official reference pages block automated fetching (HTTP 446), so exact request/response field-level schemas here are honestly modeled on the documented behavior rather than copied verbatim, and should be reconciled against the live reference before code generation.\n\nContact Support:\n Name: Kling AI Open Platform",
+      "type": "text/plain"
+    }
+  }
+}

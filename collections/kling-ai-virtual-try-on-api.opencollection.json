@@ -1,0 +1,58 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kling AI Open Platform Account Virtual Try-On API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Virtual Try-On",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a virtual try-on task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.klingai.com/v1/images/kolors-virtual-try-on",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Composite a garment image onto a person/model image."
+        },
+        {
+          "info": {
+            "name": "Query a virtual try-on task",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.klingai.com/v1/images/kolors-virtual-try-on/:task_id",
+            "params": [
+              {
+                "name": "task_id",
+                "value": "",
+                "type": "path",
+                "description": "The task identifier returned by the create-task call."
+              }
+            ]
+          },
+          "docs": "Query a virtual try-on task"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

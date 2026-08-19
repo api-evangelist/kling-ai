@@ -1,0 +1,92 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kling AI Open Platform Account Image-to-Video API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Image-to-Video",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create an image-to-video task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.klingai.com/v1/videos/image2video",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Animate a start image (and optional end image) with a motion prompt."
+        },
+        {
+          "info": {
+            "name": "Query an image-to-video task",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.klingai.com/v1/videos/image2video/:task_id",
+            "params": [
+              {
+                "name": "task_id",
+                "value": "",
+                "type": "path",
+                "description": "The task identifier returned by the create-task call."
+              }
+            ]
+          },
+          "docs": "Query an image-to-video task"
+        },
+        {
+          "info": {
+            "name": "Create a multi-image-to-video task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.klingai.com/v1/videos/multi-image2video",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Compose a video from multiple reference images plus a prompt."
+        },
+        {
+          "info": {
+            "name": "Query a multi-image-to-video task",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.klingai.com/v1/videos/multi-image2video/:task_id",
+            "params": [
+              {
+                "name": "task_id",
+                "value": "",
+                "type": "path",
+                "description": "The task identifier returned by the create-task call."
+              }
+            ]
+          },
+          "docs": "Query a multi-image-to-video task"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

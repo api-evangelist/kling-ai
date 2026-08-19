@@ -1,0 +1,58 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kling AI Open Platform Account Image Generation API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Image Generation",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create an image-generation task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.klingai.com/v1/images/generations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generate still images from a text prompt with the Kolors models."
+        },
+        {
+          "info": {
+            "name": "Query an image-generation task",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.klingai.com/v1/images/generations/:task_id",
+            "params": [
+              {
+                "name": "task_id",
+                "value": "",
+                "type": "path",
+                "description": "The task identifier returned by the create-task call."
+              }
+            ]
+          },
+          "docs": "Query an image-generation task"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
