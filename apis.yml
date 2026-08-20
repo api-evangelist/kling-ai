@@ -29,6 +29,17 @@ tags:
 - Generative AI
 - Text-to-Video
 - Image-to-Video
+- Artificial Intelligence
+- Generative Video
+- Lip Sync
+- Virtual Try-On
+- Image-Generation
+tags_raw:
+- Video Generation
+- AI Video
+- Generative AI
+- Text-to-Video
+- Image-to-Video
 - AI
 - Generative Video
 - Lip Sync
@@ -78,6 +89,8 @@ apis:
   humanURL: https://app.klingai.com/global/dev/document-api/apiReference/model/textToVideo
   baseURL: https://api.klingai.com/v1
   tags:
+  - Image-Generation
+  tags_raw:
   - Image Generation
   properties:
   - type: OpenAPI
@@ -146,6 +159,8 @@ apis:
   humanURL: https://app.klingai.com/global/dev/document-api/apiReference/model/textToVideo
   baseURL: https://api.klingai.com/v1
   tags:
+  - Lip Sync
+  tags_raw:
   - Lip-Sync
   properties:
   - type: OpenAPI
