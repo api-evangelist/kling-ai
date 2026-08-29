@@ -9,6 +9,18 @@ description: Kling AI is Kuaishou's generative video AI platform. The Kling AI O
   image generation (Kolors), and Kolors virtual try-on. The API authenticates with
   a JWT signed from an Access Key / Secret Key pair and is billed against prepaid
   resource packs.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
