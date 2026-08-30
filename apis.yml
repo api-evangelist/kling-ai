@@ -171,7 +171,7 @@ apis:
   humanURL: https://app.klingai.com/global/dev/document-api/apiReference/model/textToVideo
   baseURL: https://api.klingai.com/v1
   tags:
-  - Lip Sync
+  - Lip-Sync
   tags_raw:
   - Lip-Sync
   properties:
