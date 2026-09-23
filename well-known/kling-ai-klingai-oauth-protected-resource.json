@@ -1,0 +1,1 @@
+{"resource":"https://klingai.com/mcp","authorization_servers":["https://klingai.com/auth"],"scopes_supported":["generation.create","generation.read","account.credit.read"],"bearer_methods_supported":["header"],"resource_name":"Spring MCP Resource Server"}

@@ -1,10 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Kling AI Open Platform Account Text-to-Video API
-  description: 'The Kling AI Open Platform is the developer API for Kuaishou''s Kling generative video and image models. Every capability follows the same asynchronous pattern: submit a task with POST (receiving a task_id), then poll the matching GET endpoint by task_id until status is succeed and the generated video or image URLs are returned. Generated asset URLs are short-lived and should be downloaded promptly. Authentication uses a JWT (HS256) signed from an Access Key / Secret Key pair, passed as a Bearer token; tokens are short-lived (about 30 minutes).
-
-
-    endpointsModeled: The overall path structure, async task model, JWT auth, and model catalog are grounded in Kling''s official Open Platform documentation and cross-referenced against multiple Kling API wrappers. Kling''s official reference pages block automated fetching (HTTP 446), so exact request/response field-level schemas here are honestly modeled on the documented behavior rather than copied verbatim, and should be reconciled against the live reference before code generation.'
+  title: Kling AI Open Platform Text To Video API
+  description: The Kling AI Open Platform is the developer API for Kuaishou's Kling generative video and image models.
   version: '1.0'
   contact:
     name: Kling AI Open Platform
@@ -15,14 +12,14 @@ servers:
 security:
 - bearerAuth: []
 tags:
-- name: Text-to-Video
+- name: Text to Video
   description: Generate video from a text prompt.
 paths:
   /v1/videos/text2video:
     post:
       operationId: createTextToVideoTask
       tags:
-      - Text-to-Video
+      - Text to Video
       summary: Create a text-to-video task
       description: Submit a text prompt to generate a video. Returns a task_id to poll.
       requestBody:
@@ -46,7 +43,7 @@ paths:
     get:
       operationId: getTextToVideoTask
       tags:
-      - Text-to-Video
+      - Text to Video
       summary: Query a text-to-video task
       parameters:
       - $ref: '#/components/parameters/TaskId'
@@ -60,42 +57,20 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  responses:
+    Unauthorized:
+      description: Missing, invalid, or expired JWT.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    RateLimited:
+      description: Too many requests or concurrency limit exceeded.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    VideoTaskResponse:
-      type: object
-      properties:
-        code:
-          type: integer
-        message:
-          type: string
-        request_id:
-          type: string
-        data:
-          type: object
-          properties:
-            task_id:
-              type: string
-            task_status:
-              type: string
-              enum:
-              - submitted
-              - processing
-              - succeed
-              - failed
-            task_result:
-              type: object
-              properties:
-                videos:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                      url:
-                        type: string
-                      duration:
-                        type: string
     TextToVideoRequest:
       type: object
       required:
@@ -136,6 +111,50 @@ components:
         callback_url:
           type: string
           description: Optional URL notified when the task completes.
+    VideoTaskResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+        request_id:
+          type: string
+        data:
+          type: object
+          properties:
+            task_id:
+              type: string
+            task_status:
+              type: string
+              enum:
+              - submitted
+              - processing
+              - succeed
+              - failed
+            task_result:
+              type: object
+              properties:
+                videos:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      url:
+                        type: string
+                      duration:
+                        type: string
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+        request_id:
+          type: string
     TaskCreatedResponse:
       type: object
       properties:
@@ -162,28 +181,6 @@ components:
               type: integer
             updated_at:
               type: integer
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-        message:
-          type: string
-        request_id:
-          type: string
-  responses:
-    Unauthorized:
-      description: Missing, invalid, or expired JWT.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    RateLimited:
-      description: Too many requests or concurrency limit exceeded.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   parameters:
     TaskId:
       name: task_id

@@ -1,10 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Kling AI Open Platform Account Video Effects API
-  description: 'The Kling AI Open Platform is the developer API for Kuaishou''s Kling generative video and image models. Every capability follows the same asynchronous pattern: submit a task with POST (receiving a task_id), then poll the matching GET endpoint by task_id until status is succeed and the generated video or image URLs are returned. Generated asset URLs are short-lived and should be downloaded promptly. Authentication uses a JWT (HS256) signed from an Access Key / Secret Key pair, passed as a Bearer token; tokens are short-lived (about 30 minutes).
-
-
-    endpointsModeled: The overall path structure, async task model, JWT auth, and model catalog are grounded in Kling''s official Open Platform documentation and cross-referenced against multiple Kling API wrappers. Kling''s official reference pages block automated fetching (HTTP 446), so exact request/response field-level schemas here are honestly modeled on the documented behavior rather than copied verbatim, and should be reconciled against the live reference before code generation.'
+  title: Kling AI Open Platform Video Effects API
+  description: The Kling AI Open Platform is the developer API for Kuaishou's Kling generative video and image models.
   version: '1.0'
   contact:
     name: Kling AI Open Platform
@@ -55,6 +52,32 @@ paths:
                 $ref: '#/components/schemas/VideoTaskResponse'
 components:
   schemas:
+    TaskCreatedResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: Business status code (0 indicates success).
+        message:
+          type: string
+        request_id:
+          type: string
+        data:
+          type: object
+          properties:
+            task_id:
+              type: string
+            task_status:
+              type: string
+              enum:
+              - submitted
+              - processing
+              - succeed
+              - failed
+            created_at:
+              type: integer
+            updated_at:
+              type: integer
     VideoTaskResponse:
       type: object
       properties:
@@ -115,32 +138,6 @@ components:
           - '5'
         callback_url:
           type: string
-    TaskCreatedResponse:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: Business status code (0 indicates success).
-        message:
-          type: string
-        request_id:
-          type: string
-        data:
-          type: object
-          properties:
-            task_id:
-              type: string
-            task_status:
-              type: string
-              enum:
-              - submitted
-              - processing
-              - succeed
-              - failed
-            created_at:
-              type: integer
-            updated_at:
-              type: integer
   parameters:
     TaskId:
       name: task_id
