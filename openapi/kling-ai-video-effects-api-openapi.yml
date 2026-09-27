@@ -51,6 +51,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/VideoTaskResponse'
 components:
+  parameters:
+    TaskId:
+      name: task_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The task identifier returned by the create-task call.
   schemas:
     TaskCreatedResponse:
       type: object
@@ -138,14 +146,6 @@ components:
           - '5'
         callback_url:
           type: string
-  parameters:
-    TaskId:
-      name: task_id
-      in: path
-      required: true
-      schema:
-        type: string
-      description: The task identifier returned by the create-task call.
   securitySchemes:
     bearerAuth:
       type: http

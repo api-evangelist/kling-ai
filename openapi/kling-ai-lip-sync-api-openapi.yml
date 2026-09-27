@@ -52,32 +52,6 @@ paths:
                 $ref: '#/components/schemas/VideoTaskResponse'
 components:
   schemas:
-    TaskCreatedResponse:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: Business status code (0 indicates success).
-        message:
-          type: string
-        request_id:
-          type: string
-        data:
-          type: object
-          properties:
-            task_id:
-              type: string
-            task_status:
-              type: string
-              enum:
-              - submitted
-              - processing
-              - succeed
-              - failed
-            created_at:
-              type: integer
-            updated_at:
-              type: integer
     LipSyncRequest:
       type: object
       properties:
@@ -104,6 +78,32 @@ components:
           description: Audio file URL when mode is audio2video.
         callback_url:
           type: string
+    TaskCreatedResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: Business status code (0 indicates success).
+        message:
+          type: string
+        request_id:
+          type: string
+        data:
+          type: object
+          properties:
+            task_id:
+              type: string
+            task_status:
+              type: string
+              enum:
+              - submitted
+              - processing
+              - succeed
+              - failed
+            created_at:
+              type: integer
+            updated_at:
+              type: integer
     VideoTaskResponse:
       type: object
       properties:

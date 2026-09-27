@@ -46,7 +46,7 @@ tags:
 - Generative Video
 - Lip Sync
 - Virtual Try-On
-- Image-Generation
+- Image Generation
 tags_raw:
 - Video Generation
 - AI Video
@@ -58,6 +58,7 @@ tags_raw:
 - Lip Sync
 - Virtual Try-On
 - Image Generation
+- Image-Generation
 created: '2026-07-11'
 modified: '2026-07-11'
 specificationVersion: '0.23'
@@ -102,9 +103,10 @@ apis:
   humanURL: https://app.klingai.com/global/dev/document-api/apiReference/model/textToVideo
   baseURL: https://api.klingai.com/v1
   tags:
-  - Image-Generation
+  - Image Generation
   tags_raw:
   - Image Generation
+  - Image-Generation
   properties:
   - type: OpenAPI
     url: openapi/kling-ai-image-generation-api-openapi.yml

@@ -52,6 +52,19 @@ paths:
                 $ref: '#/components/schemas/VideoTaskResponse'
 components:
   schemas:
+    VideoExtendRequest:
+      type: object
+      required:
+      - video_id
+      properties:
+        video_id:
+          type: string
+          description: The origin task/video id of a previously generated video to extend.
+        prompt:
+          type: string
+          description: Optional continuation prompt.
+        callback_url:
+          type: string
     TaskCreatedResponse:
       type: object
       properties:
@@ -113,19 +126,6 @@ components:
                         type: string
                       duration:
                         type: string
-    VideoExtendRequest:
-      type: object
-      required:
-      - video_id
-      properties:
-        video_id:
-          type: string
-          description: The origin task/video id of a previously generated video to extend.
-        prompt:
-          type: string
-          description: Optional continuation prompt.
-        callback_url:
-          type: string
   parameters:
     TaskId:
       name: task_id
