@@ -52,6 +52,39 @@ paths:
                 $ref: '#/components/schemas/ImageTaskResponse'
 components:
   schemas:
+    ImageTaskResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+        request_id:
+          type: string
+        data:
+          type: object
+          properties:
+            task_id:
+              type: string
+            task_status:
+              type: string
+              enum:
+              - submitted
+              - processing
+              - succeed
+              - failed
+            task_result:
+              type: object
+              properties:
+                images:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      index:
+                        type: integer
+                      url:
+                        type: string
     VirtualTryOnRequest:
       type: object
       required:
@@ -95,39 +128,6 @@ components:
               type: integer
             updated_at:
               type: integer
-    ImageTaskResponse:
-      type: object
-      properties:
-        code:
-          type: integer
-        message:
-          type: string
-        request_id:
-          type: string
-        data:
-          type: object
-          properties:
-            task_id:
-              type: string
-            task_status:
-              type: string
-              enum:
-              - submitted
-              - processing
-              - succeed
-              - failed
-            task_result:
-              type: object
-              properties:
-                images:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      index:
-                        type: integer
-                      url:
-                        type: string
   parameters:
     TaskId:
       name: task_id

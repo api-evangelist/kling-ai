@@ -91,34 +91,6 @@ paths:
                 $ref: '#/components/schemas/VideoTaskResponse'
 components:
   schemas:
-    MultiImageToVideoRequest:
-      type: object
-      required:
-      - image_list
-      - prompt
-      properties:
-        model_name:
-          type: string
-          example: kling-v1-6
-        image_list:
-          type: array
-          items:
-            type: string
-          description: List of reference image URLs or base64 strings.
-        prompt:
-          type: string
-        mode:
-          type: string
-          enum:
-          - std
-          - pro
-        duration:
-          type: string
-          enum:
-          - '5'
-          - '10'
-        callback_url:
-          type: string
     ImageToVideoRequest:
       type: object
       required:
@@ -151,41 +123,6 @@ components:
           - '10'
         callback_url:
           type: string
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-        message:
-          type: string
-        request_id:
-          type: string
-    TaskCreatedResponse:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: Business status code (0 indicates success).
-        message:
-          type: string
-        request_id:
-          type: string
-        data:
-          type: object
-          properties:
-            task_id:
-              type: string
-            task_status:
-              type: string
-              enum:
-              - submitted
-              - processing
-              - succeed
-              - failed
-            created_at:
-              type: integer
-            updated_at:
-              type: integer
     VideoTaskResponse:
       type: object
       properties:
@@ -221,14 +158,69 @@ components:
                         type: string
                       duration:
                         type: string
-  parameters:
-    TaskId:
-      name: task_id
-      in: path
-      required: true
-      schema:
-        type: string
-      description: The task identifier returned by the create-task call.
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+        request_id:
+          type: string
+    MultiImageToVideoRequest:
+      type: object
+      required:
+      - image_list
+      - prompt
+      properties:
+        model_name:
+          type: string
+          example: kling-v1-6
+        image_list:
+          type: array
+          items:
+            type: string
+          description: List of reference image URLs or base64 strings.
+        prompt:
+          type: string
+        mode:
+          type: string
+          enum:
+          - std
+          - pro
+        duration:
+          type: string
+          enum:
+          - '5'
+          - '10'
+        callback_url:
+          type: string
+    TaskCreatedResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: Business status code (0 indicates success).
+        message:
+          type: string
+        request_id:
+          type: string
+        data:
+          type: object
+          properties:
+            task_id:
+              type: string
+            task_status:
+              type: string
+              enum:
+              - submitted
+              - processing
+              - succeed
+              - failed
+            created_at:
+              type: integer
+            updated_at:
+              type: integer
   responses:
     Unauthorized:
       description: Missing, invalid, or expired JWT.
@@ -242,6 +234,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+  parameters:
+    TaskId:
+      name: task_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The task identifier returned by the create-task call.
   securitySchemes:
     bearerAuth:
       type: http
