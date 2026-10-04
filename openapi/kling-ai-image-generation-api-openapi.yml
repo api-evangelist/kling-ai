@@ -85,32 +85,6 @@ components:
                         type: integer
                       url:
                         type: string
-    TaskCreatedResponse:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: Business status code (0 indicates success).
-        message:
-          type: string
-        request_id:
-          type: string
-        data:
-          type: object
-          properties:
-            task_id:
-              type: string
-            task_status:
-              type: string
-              enum:
-              - submitted
-              - processing
-              - succeed
-              - failed
-            created_at:
-              type: integer
-            updated_at:
-              type: integer
     ImageGenerationRequest:
       type: object
       required:
@@ -146,6 +120,32 @@ components:
           - '3:4'
         callback_url:
           type: string
+    TaskCreatedResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: Business status code (0 indicates success).
+        message:
+          type: string
+        request_id:
+          type: string
+        data:
+          type: object
+          properties:
+            task_id:
+              type: string
+            task_status:
+              type: string
+              enum:
+              - submitted
+              - processing
+              - succeed
+              - failed
+            created_at:
+              type: integer
+            updated_at:
+              type: integer
   parameters:
     TaskId:
       name: task_id

@@ -90,27 +90,53 @@ paths:
               schema:
                 $ref: '#/components/schemas/VideoTaskResponse'
 components:
+  responses:
+    RateLimited:
+      description: Too many requests or concurrency limit exceeded.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing, invalid, or expired JWT.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    TaskId:
+      name: task_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The task identifier returned by the create-task call.
   schemas:
-    ImageToVideoRequest:
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+        request_id:
+          type: string
+    MultiImageToVideoRequest:
       type: object
       required:
-      - image
+      - image_list
+      - prompt
       properties:
         model_name:
           type: string
-          example: kling-v2-6
-        image:
-          type: string
-          description: Start-frame image as a URL or base64 string.
-        image_tail:
-          type: string
-          description: Optional end-frame image as a URL or base64 string.
+          example: kling-v1-6
+        image_list:
+          type: array
+          items:
+            type: string
+          description: List of reference image URLs or base64 strings.
         prompt:
           type: string
-        negative_prompt:
-          type: string
-        cfg_scale:
-          type: number
         mode:
           type: string
           enum:
@@ -158,43 +184,6 @@ components:
                         type: string
                       duration:
                         type: string
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-        message:
-          type: string
-        request_id:
-          type: string
-    MultiImageToVideoRequest:
-      type: object
-      required:
-      - image_list
-      - prompt
-      properties:
-        model_name:
-          type: string
-          example: kling-v1-6
-        image_list:
-          type: array
-          items:
-            type: string
-          description: List of reference image URLs or base64 strings.
-        prompt:
-          type: string
-        mode:
-          type: string
-          enum:
-          - std
-          - pro
-        duration:
-          type: string
-          enum:
-          - '5'
-          - '10'
-        callback_url:
-          type: string
     TaskCreatedResponse:
       type: object
       properties:
@@ -221,27 +210,38 @@ components:
               type: integer
             updated_at:
               type: integer
-  responses:
-    Unauthorized:
-      description: Missing, invalid, or expired JWT.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    RateLimited:
-      description: Too many requests or concurrency limit exceeded.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-  parameters:
-    TaskId:
-      name: task_id
-      in: path
-      required: true
-      schema:
-        type: string
-      description: The task identifier returned by the create-task call.
+    ImageToVideoRequest:
+      type: object
+      required:
+      - image
+      properties:
+        model_name:
+          type: string
+          example: kling-v2-6
+        image:
+          type: string
+          description: Start-frame image as a URL or base64 string.
+        image_tail:
+          type: string
+          description: Optional end-frame image as a URL or base64 string.
+        prompt:
+          type: string
+        negative_prompt:
+          type: string
+        cfg_scale:
+          type: number
+        mode:
+          type: string
+          enum:
+          - std
+          - pro
+        duration:
+          type: string
+          enum:
+          - '5'
+          - '10'
+        callback_url:
+          type: string
   securitySchemes:
     bearerAuth:
       type: http

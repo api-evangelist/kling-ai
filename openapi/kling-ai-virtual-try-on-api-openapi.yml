@@ -85,23 +85,6 @@ components:
                         type: integer
                       url:
                         type: string
-    VirtualTryOnRequest:
-      type: object
-      required:
-      - human_image
-      - cloth_image
-      properties:
-        model_name:
-          type: string
-          example: kolors-virtual-try-on-v1-5
-        human_image:
-          type: string
-          description: Person/model image URL or base64 string.
-        cloth_image:
-          type: string
-          description: Garment image URL or base64 string.
-        callback_url:
-          type: string
     TaskCreatedResponse:
       type: object
       properties:
@@ -128,6 +111,23 @@ components:
               type: integer
             updated_at:
               type: integer
+    VirtualTryOnRequest:
+      type: object
+      required:
+      - human_image
+      - cloth_image
+      properties:
+        model_name:
+          type: string
+          example: kolors-virtual-try-on-v1-5
+        human_image:
+          type: string
+          description: Person/model image URL or base64 string.
+        cloth_image:
+          type: string
+          description: Garment image URL or base64 string.
+        callback_url:
+          type: string
   parameters:
     TaskId:
       name: task_id
