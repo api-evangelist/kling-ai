@@ -51,6 +51,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/ImageTaskResponse'
 components:
+  parameters:
+    TaskId:
+      name: task_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The task identifier returned by the create-task call.
   schemas:
     ImageTaskResponse:
       type: object
@@ -146,14 +154,6 @@ components:
               type: integer
             updated_at:
               type: integer
-  parameters:
-    TaskId:
-      name: task_id
-      in: path
-      required: true
-      schema:
-        type: string
-      description: The task identifier returned by the create-task call.
   securitySchemes:
     bearerAuth:
       type: http
