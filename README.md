@@ -1,4 +1,4 @@
-# Kling AI (kling-ai)
+# Kling AI
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,103 +64,138 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Kling AI is Kuaishou's generative video AI platform. The Kling AI Open Platform (developer API) turns text and images into video and imagery through an asynchronous **create-a-task then query-the-task** workflow, covering text-to-video, image-to-video, multi-image-to-video, video extension, lip-sync, video effects, image generation (Kolors), and Kolors virtual try-on. The API authenticates with a JWT signed from an Access Key / Secret Key pair and is billed against prepaid resource packs.
+Kling AI is Kuaishou's generative video AI platform. The Kling AI Open Platform (developer API) turns text and images into video and imagery through an asynchronous create-a-task then query-the-task workflow, covering text-to-video, image-to-video, multi-image-to-video, video extension, lip-sync, video effects, image generation (Kolors), and Kolors virtual try-on. The API authenticates with a JWT signed from an Access Key / Secret Key pair and is billed against prepaid resource packs.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/kling-ai/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/kling-ai/refs/heads/main/apis.yml)
+**Areas:** Video Generation · AI Video · Generative AI · Image-to-Video · Artificial Intelligence · Generative Video · Lip Sync · Virtual Try-On · Image Generation
 
-## Access Model (Honest Notes)
+## Kling AI on APIs.io
 
-- **Gated, key-based.** You register on the [Kling AI Open Platform](https://app.klingai.com/global/dev), obtain an **Access Key** and **Secret Key**, and generate a short-lived **JWT** (HS256) client-side for every request. The Access Key is the `iss` claim; `exp` is ~30 minutes out; `nbf` is ~5 seconds in the past. The token is sent as `Authorization: Bearer <token>`.
-- **Asynchronous by design.** Nothing returns a finished video inline. You `POST` to create a task, get back a `task_id`, then poll the matching `GET .../{task_id}` endpoint (or supply a `callback_url`) until `task_status` is `succeed`. Generated asset URLs are short-lived — download them promptly.
-- **Base URL:** `https://api.klingai.com` (with a `/v1` prefix for generation endpoints).
-- **Prepaid billing.** Consumption draws down prepaid **resource packs**; new accounts get a small free credit grant, and failed API tasks are reported not to deduct resources.
-- **Documentation caveat.** Kling's official reference pages block automated fetching (HTTP 446). The endpoint paths, JWT scheme, async task model, and model catalog here are well corroborated across Kling's docs and multiple public wrappers; the fine-grained request/response field schemas in the OpenAPI are **honestly modeled** (`endpointsModeled: true`) and should be reconciled against the live reference before code generation.
+Everything profiled for Kling AI is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/kling-ai/](https://apis.io/providers/kling-ai/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (8)
 
-- Video Generation
-- AI Video
-- Generative AI
-- Text-to-Video
-- Image-to-Video
-- Lip Sync
-- Virtual Try-On
-- Image Generation
+- [Kling AI Account API](https://apis.io/apis/kling-ai/kling-ai-account-api/) — Resource-pack balance and consumption.
+- [Kling AI Image Generation API](https://apis.io/apis/kling-ai/kling-ai-image-generation-api/) — Generate still images with the Kolors models.
+- [Kling AI Image-to-Video API](https://apis.io/apis/kling-ai/kling-ai-image-to-video-api/) — Animate images into video.
+- [Kling AI Lip-Sync API](https://apis.io/apis/kling-ai/kling-ai-lip-sync-api/) — Sync a subject's lips to speech or audio.
+- [Kling AI Text-to-Video API](https://apis.io/apis/kling-ai/kling-ai-text-to-video-api/) — Generate video from a text prompt.
+- [Kling AI Video Effects API](https://apis.io/apis/kling-ai/kling-ai-video-effects-api/) — Apply preset creative effects to images.
+- [Kling AI Video Extension API](https://apis.io/apis/kling-ai/kling-ai-video-extension-api/) — Extend an existing generated video.
+- [Kling AI Virtual Try-On API](https://apis.io/apis/kling-ai/kling-ai-virtual-try-on-api/) — Composite a garment onto a person image.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-07-11
-- **Modified:** 2026-07-11
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### MCP servers (1)
 
-### Kling AI Text-to-Video API
+Model Context Protocol servers that expose the API to agents.
 
-Generate video from a text prompt across Kling video models (kling-v1 through kling-v2-6 and the turbo/master variants), with duration, aspect ratio, standard/professional mode, and cfg_scale. Submit a task with POST, then poll GET by task_id for the rendered video URL.
+- [kling-ai](https://apis.io/servers/kling-ai/kling-ai/)
 
-- **Human URL:** [https://app.klingai.com/global/dev/document-api/apiReference/model/textToVideo](https://app.klingai.com/global/dev/document-api/apiReference/model/textToVideo)
-- **Base URL:** `https://api.klingai.com/v1`
+#### Agentic access (1)
 
-### Kling AI Image-to-Video API
+Which operations an agent can call, which act, and which need a human in the loop.
 
-Animate a still image into video from a start frame (and optional end frame) plus a motion prompt. Async create-then-query task pattern.
+- [Kling Ai Agentic Access](https://apis.io/agentic-access/kling-ai/kling-ai-agentic-access/)
 
-- **Human URL:** [https://app.klingai.com/global/dev/document-api/apiReference/model/imageToVideo](https://app.klingai.com/global/dev/document-api/apiReference/model/imageToVideo)
-- **Base URL:** `https://api.klingai.com/v1`
+#### Collections (9)
 
-### Kling AI Multi-Image-to-Video API
+Postman and Open Collection request collections.
 
-Compose a video from multiple reference images (subjects/elements) plus a prompt. Async create-then-query task pattern.
+- [Kling AI Open Platform API](https://apis.io/collections/kling-ai/open-kling-ai/)
+- [Kling AI Open Platform Account API](https://apis.io/collections/kling-ai/open-kling-ai-account-api/)
+- [Kling AI Open Platform Account Image Generation API](https://apis.io/collections/kling-ai/open-kling-ai-image-generation-api/)
+- [Kling AI Open Platform Account Image-to-Video API](https://apis.io/collections/kling-ai/open-kling-ai-image-to-video-api/)
+- [Kling AI Open Platform Account Lip-Sync API](https://apis.io/collections/kling-ai/open-kling-ai-lip-sync-api/)
+- [Kling AI Open Platform Account Text-to-Video API](https://apis.io/collections/kling-ai/open-kling-ai-text-to-video-api/)
+- [Kling AI Open Platform Account Video Effects API](https://apis.io/collections/kling-ai/open-kling-ai-video-effects-api/)
+- [Kling AI Open Platform Account Video Extension API](https://apis.io/collections/kling-ai/open-kling-ai-video-extension-api/)
+- [Kling AI Open Platform Account Virtual Try-On API](https://apis.io/collections/kling-ai/open-kling-ai-virtual-try-on-api/)
 
-- **Base URL:** `https://api.klingai.com/v1`
+#### Security (1)
 
-### Kling AI Video Extension API
+Authentication, trust centre, and vulnerability disclosure.
 
-Extend a previously generated video by referencing its origin task id and an optional continuation prompt, adding seconds of coherent footage.
+- [Kling Ai Authentication](https://apis.io/security/kling-ai/kling-ai-authentication/)
 
-- **Base URL:** `https://api.klingai.com/v1`
+#### Plans and pricing (1)
 
-### Kling AI Lip-Sync API
+Published plans, tiers and prices.
 
-Drive lip movement on a generated or uploaded video from supplied text (text-to-speech voice) or an audio file.
+- [Kling Ai Plans Pricing](https://apis.io/plans/kling-ai/kling-ai-plans-pricing/)
 
-- **Base URL:** `https://api.klingai.com/v1`
+#### Rate limits (1)
 
-### Kling AI Video Effects API
+Published request limits.
 
-Apply preset creative video effects (hug, kiss, squish, and other scene templates) to one or more input images.
+- [Kling Ai Rate Limits](https://apis.io/rate-limits/kling-ai/kling-ai-rate-limits/)
 
-- **Base URL:** `https://api.klingai.com/v1`
+#### FinOps (1)
 
-### Kling AI Image Generation API
+What the API costs to run, by operation.
 
-Generate still images from a text prompt (and optional reference image) using the Kolors image models (kling-v1 through kling-v2-1).
+- [Kling Ai Finops](https://apis.io/finops/kling-ai/kling-ai-finops/)
 
-- **Base URL:** `https://api.klingai.com/v1`
+## Where to find this API
 
-### Kling AI Virtual Try-On API
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-Kolors Virtual Try-On composites a garment image onto a person/model image to produce a realistic try-on result (model kolors-virtual-try-on-v1-5).
-
-- **Base URL:** `https://api.klingai.com/v1`
-
-### Kling AI Account Resource API
-
-Query account resource-pack balances and consumption so callers can monitor remaining prepaid credits.
-
-- **Base URL:** `https://api.klingai.com`
-
-## Common Properties
-
-- [Authentication](authentication/kling-ai-authentication.yml)
-- [LinkedIn](https://www.linkedin.com/company/kling-ai)
 - [Website](https://klingai.com)
 - [Documentation](https://app.klingai.com/global/dev/document-api/quickStart/productIntroduction/overview)
-- [Plans](plans/kling-ai-plans-pricing.yml)
-- [Rate Limits](rate-limits/kling-ai-rate-limits.yml)
-- [Fin Ops](finops/kling-ai-finops.yml)
+- [Pricing](https://kling.ai/dev/pricing)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 30.9** — thin · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 68.3 |
+| Contract quality | 45.1 |
+| Contract governance | 0.0 |
+| Operational transparency | 7.9 |
+| Developer ergonomics | 29.8 |
+| Access clarity | 42.1 |
+
+**Agent readiness 43.9** — agent-ready (gated down from agent-native)
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | verified |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 5.5** — AI & Biometrics
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/kling-ai/](https://apis.io/providers/kling-ai/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Kling AI: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/kling-ai/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
